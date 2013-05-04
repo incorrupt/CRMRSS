@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.intechbank.crm.model.Entry">
+        <id name="id" type="double" />
+        <property name="uri" type="string" /> 
+        <property name="author" type="string" />  
+        <property name="title" type="string" />  
+        <property name="content" type="string" />  
+        <property name="url" type="string" /> 
+        <property name="publishedDate" type="timestamp" /> 
+        <property name="updatedDate" type="timestamp" /> 
+    </class>  
+       
+    <class name="ru.intechbank.crm.model.Feed">
+        <id name="id" type="double" />
+        <property name="uri" type="string" /> 
+        <property name="author" type="string" />  
+        <property name="title" type="string" />  
+        <property name="content" type="string" />  
+        <property name="url" type="string" /> 
+        <property name="name" type="string" /> 
+        <property name="updatedDate" type="timestamp" /> 
+    </class> 
+        
+    <sql-query name="GetFeed">
+        <return alias="Feed" class="ru.intechbank.crm.model.Feed" >
+        	<return-property name="id" 			  column="id"/>
+        	<return-property name="uri" 		  column="uri"/> 
+        	<return-property name="author" 		  column="author"/>
+        	<return-property name="title" 		  column="title"/> 	
+        	<return-property name="content" 	  column="content"/>
+        	<return-property name="url" 		  column="url"/> 
+        	<return-property name="name" 		  column="name"/>
+        	<return-property name="updatedDate"   column="updatedDate"/>
+        </return>
+          {  call  dbo.GetUserFeed ( :feedName  ) }
+    </sql-query>
+    
+    <sql-query name="GetEntries" callable="true">
+        <return alias="Entry" class="ru.intechbank.crm.model.Entry" >
+        	<return-property name="id" 			  column="id"/>
+        	<return-property name="uri" 		  column="uri"/> 
+        	<return-property name="author" 		  column="author"/>
+        	<return-property name="title" 		  column="title"/> 	
+        	<return-property name="content" 	  column="content"/>
+        	<return-property name="url" 		  column="url"/> 
+        	<return-property name="publishedDate" column="publishedDate"/>
+        	<return-property name="updatedDate"   column="updatedDate"/>
+        </return>
+          {  call  dbo.GetUserEntries ( :feedName  ) }
+    </sql-query>
+  
+</hibernate-mapping> 
